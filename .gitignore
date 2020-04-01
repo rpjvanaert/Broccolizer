@@ -110,3 +110,5 @@ src/main/java/broccolizer/Information.java
 build/classes/java/main/broccolizer/App.class
 
 src/main/java/broccolizer/App.java
+
+.gradle/5.2.1/fileContent/fileContent.lock
