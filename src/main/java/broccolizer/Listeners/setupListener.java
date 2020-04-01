@@ -24,17 +24,20 @@ public class setupListener implements MessageCreateListener {
 
         switch (sentChannel.getIdAsString()){
             case "694900308484030534":
-                PlayerManager.getInstance().addUser(requester);
-                sentChannel.sendMessage("Welcome to the game of the-werewolves-of-millers-hollow\n" +
-                        "Send \"!joinGameLobby\" to join the lobby!\n" +
-                        "The players in current session:");
-                for (User each : PlayerManager.getInstance().getUsers()){
-                    sentChannel.sendMessage(" - " + each.getName() + " (" + each.getMentionTag() + ").");
-                    each.sendMessage("The players in current session:");
-                    for (User eachMember : PlayerManager.getInstance().getUsers()){
-                        each.sendMessage(" - " + eachMember.getName() + " (" + eachMember.getMentionTag() + ").");
+                if (msg.getContent().equalsIgnoreCase("!joinGameLobby")){
+                    PlayerManager.getInstance().addUser(requester);
+                    sentChannel.sendMessage("Welcome to the game of the-werewolves-of-millers-hollow\n" +
+                            "Send \"!joinGameLobby\" to join the lobby!\n" +
+                            "The players in current session:");
+                    for (User each : PlayerManager.getInstance().getUsers()){
+                        sentChannel.sendMessage(" - " + each.getName() + " (" + each.getMentionTag() + ").");
+                        each.sendMessage("The players in current session:");
+                        for (User eachMember : PlayerManager.getInstance().getUsers()){
+                            each.sendMessage(" - " + eachMember.getName() + " (" + eachMember.getMentionTag() + ").");
+                        }
                     }
                 }
+
                 break;
         }
     }
