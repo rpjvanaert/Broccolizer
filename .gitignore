@@ -92,3 +92,21 @@ fabric.properties
 
 # End of https://www.gitignore.io/api/intellij
 src/main/java/broccolizer/Information.java
+
+.gradle/5.2.1/executionHistory/executionHistory.bin
+
+.gradle/5.2.1/executionHistory/executionHistory.lock
+
+.gradle/5.2.1/fileHashes/fileHashes.bin
+
+.gradle/5.2.1/fileHashes/fileHashes.lock
+
+.gradle/5.2.1/javaCompile/classAnalysis.bin
+
+.gradle/5.2.1/javaCompile/javaCompile.lock
+
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+
+build/classes/java/main/broccolizer/App.class
+
+src/main/java/broccolizer/App.java
