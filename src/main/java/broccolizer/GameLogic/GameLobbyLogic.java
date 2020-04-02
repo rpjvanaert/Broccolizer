@@ -3,6 +3,7 @@ package broccolizer.GameLogic;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.user.User;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class GameLobbyLogic {
@@ -18,9 +19,17 @@ public class GameLobbyLogic {
         }
     }
 
-    public static void sendUsers(HashSet<User> users, TextChannel castChannel){
-        for (User each : users){
+    public static void sendUsers(HashMap<User,Roles> users, TextChannel castChannel){
+        for (User each : users.keySet()){
             castChannel.sendMessage(" - " + each.getName() + " (" + each.getMentionTag() + ").");
         }
+    }
+
+    public static boolean assignRoles(){
+            if (GameManager.getInstance().getUsers().size() >= 9){
+                GameManager.getInstance().assignRoles();
+                return true;
+            }
+            return false;
     }
 }
