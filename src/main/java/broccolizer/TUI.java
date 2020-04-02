@@ -11,12 +11,13 @@ public class TUI {
                         "---------------------------\n" +
                         "Command\t\tFunction\n" +
                         "\n" +
-                        "!info\t\t\tTo get this info panel\n" +
-                        "!state\t\t\tTo get state of bot\n" +
-                        "!join\t\t\tYou join the game lobby\n" +
-                        "!leave\t\t\tYou leave the game lobby\n" +
-                        "!start\t\t\tTo start the game\n" +
-                        "!players\t\t\tPlayers in lobby\n"
+                        "!info\t\t\t\t\tTo get this info panel\n" +
+                        "!state\t\t\t\t\tTo get state of bot\n" +
+                        "!join\t\t\t\t\tYou join the game lobby\n" +
+                        "!join @<MentionTag>\tTo add a list of players\n" +
+                        "!leave\t\t\t\t\tYou leave the game lobby\n" +
+                        "!start\t\t\t\t\tTo start the game\n" +
+                        "!players\t\t\t\t\tPlayers in lobby\n"
         );
     }
 }

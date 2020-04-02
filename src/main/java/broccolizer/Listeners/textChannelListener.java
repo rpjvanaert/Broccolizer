@@ -6,18 +6,24 @@ import broccolizer.GameLogic.GameLobbyLogic;
 import broccolizer.GameLogic.GameManager;
 import broccolizer.GameLogic.Roles;
 import broccolizer.TUI;
+import org.javacord.api.entity.Permissionable;
+import org.javacord.api.entity.channel.ServerTextChannelBuilder;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.MessageSet;
+import org.javacord.api.entity.permission.Permissions;
+import org.javacord.api.entity.permission.PermissionsBuilder;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class textChannelListener implements MessageCreateListener {
 
+    String wolfChatID;
     @Override
     public void onMessageCreate(MessageCreateEvent event){
         Message msg = event.getMessage();
@@ -29,8 +35,12 @@ public class textChannelListener implements MessageCreateListener {
 
         switch (sentChannel.getIdAsString()){
             case "694900308484030534":
-                if (msg.getContent().equalsIgnoreCase("!join") && App.state == BotStates.LOBBY){
-                    GameLobbyLogic.addToPlayers(requester, sentChannel);
+                if (msg.getContent().contains("!join") && App.state == BotStates.LOBBY){
+                    if (msg.getContent().equalsIgnoreCase("!join")) {
+                        GameLobbyLogic.addPlayer(requester, sentChannel);
+                    } else if (!msg.getMentionedUsers().isEmpty()){
+                        GameLobbyLogic.addPlayers(msg.getMentionedUsers(), sentChannel);
+                    }
 
                 } else if (msg.getContent().equalsIgnoreCase("!clear") && App.state == BotStates.LOBBY){
                     sentChannel.getMessages(1000).thenAcceptAsync(MessageSet::deleteAll);
@@ -52,6 +62,17 @@ public class textChannelListener implements MessageCreateListener {
                         }
                     } else if (App.state == BotStates.ROLE_ASSIGNMENT){
                         App.state = BotStates.IN_GAME;
+                        TextChannel channel = null;
+                        Permissions wolfPerm = new PermissionsBuilder().setAllDenied().build();
+                        try {
+                            channel = new ServerTextChannelBuilder(GameManager.getInstance().getServer()).addPermissionOverwrite(GameManager.getInstance().getWolves(), ).setName("wolves").create().get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+
+                        wolfChatID = channel.getIdAsString();
                     }
 
                 } else if (msg.getContent().equalsIgnoreCase("!info")){
@@ -80,6 +101,9 @@ public class textChannelListener implements MessageCreateListener {
 
                 }
                 break;
+
+            case wolfChatID:
+
         }
     }
 

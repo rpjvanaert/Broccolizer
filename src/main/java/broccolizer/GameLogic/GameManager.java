@@ -1,9 +1,11 @@
 package broccolizer.GameLogic;
 
+import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class GameManager {
@@ -11,6 +13,8 @@ public class GameManager {
     private static HashMap<User, Roles> inGame;
     private static ArrayList<User> players;
     private static GameStates gameState;
+
+    private static Server server;
 
     private static GameManager instance;
 
@@ -24,7 +28,15 @@ public class GameManager {
     private GameManager(){
         inGame = new HashMap<>();
         players = new ArrayList<>();
-        gameState = GameStates.DAY;
+        gameState = GameStates.NIGHT;
+    }
+
+    public static Server getServer() {
+        return server;
+    }
+
+    public static void setServer(Server server) {
+        GameManager.server = server;
     }
 
     public static boolean addUser(User user){
@@ -85,5 +97,15 @@ public class GameManager {
 
     public static HashMap<User, Roles> getUsers(){
         return inGame;
+    }
+
+    public static List<User> getWolves(){
+        ArrayList<User> wolves = new ArrayList<>();
+        for (User eachUser : players){
+            if (inGame.get(eachUser) == Roles.WOLF){
+                wolves.add(eachUser);
+            }
+        }
+        return wolves;
     }
 }

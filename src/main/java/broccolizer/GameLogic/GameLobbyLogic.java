@@ -5,19 +5,27 @@ import org.javacord.api.entity.user.User;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 public class GameLobbyLogic {
-        public static void addToPlayers(User player, TextChannel castChannel){
-        if (GameManager.getInstance().addUser(player)){
-            castChannel.sendMessage("Welcome to the game of the-werewolves-of-millers-hollow\n" +
-                    "Send \"!join\" to join the lobby!\n" +
-                    "or \"!leave\" to leave the lobby!\n" +
-                    "The players in current session:");
-            sendUsers(GameManager.getInstance().getUsers(), castChannel);
-        } else {
-            castChannel.sendMessage("Couldn't add player. Might be in already");
+        public static boolean addPlayer(User player, TextChannel castChannel){
+            if (GameManager.getInstance().addUser(player)){
+                return true;
+            } else {
+                return false;
+            }
         }
-    }
+
+        public static boolean addPlayers(List<User> usersList, TextChannel castChannel){
+            boolean works = true;
+            for(User each : usersList){
+                if (!GameManager.getInstance().addUser(each)){
+                    works = false;
+                }
+            }
+            return works;
+        }
+
 
     public static void sendUsers(HashMap<User,Roles> users, TextChannel castChannel){
         for (User each : users.keySet()){
