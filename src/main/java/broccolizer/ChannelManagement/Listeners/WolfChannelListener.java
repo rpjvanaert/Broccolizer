@@ -6,6 +6,6 @@ import org.javacord.api.listener.message.MessageCreateListener;
 public class WolfChannelListener implements MessageCreateListener {
     @Override
     public void onMessageCreate(MessageCreateEvent messageCreateEvent) {
-        
+
     }
 }

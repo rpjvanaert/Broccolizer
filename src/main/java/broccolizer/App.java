@@ -19,14 +19,9 @@ public class App {
 
         Server server = api.getServerById(Information.getServerID()).get();
 
-
-
         DiscordController.getInstance().setServer(server);
 
         api.addListener(new MainChannelListener());
-
-        ChannelManager.setupChannels();
-
 
         System.out.println("You can invite the bot by using the following url: " + api.createBotInvite());
     }
