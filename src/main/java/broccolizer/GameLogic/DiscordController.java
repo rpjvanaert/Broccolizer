@@ -1,5 +1,6 @@
 package broccolizer.GameLogic;
 
+import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 
@@ -8,27 +9,37 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class GameManager {
+public class DiscordController {
 
     private static HashMap<User, Roles> inGame;
     private static ArrayList<User> players;
     private static GameStates gameState;
 
+    private static TextChannel wolvesChannel;
+    private static TextChannel witchChannel;
+    private static TextChannel oracleChannel;
+    private static TextChannel cupidChannel;
+
     private static Server server;
 
-    private static GameManager instance;
+    private static DiscordController instance;
 
-    public static GameManager getInstance(){
+    public static DiscordController getInstance(){
         if (instance == null){
-            instance = new GameManager();
+            instance = new DiscordController();
         }
         return instance;
     }
 
-    private GameManager(){
+    private DiscordController(){
         inGame = new HashMap<>();
         players = new ArrayList<>();
         gameState = GameStates.NIGHT;
+
+        wolvesChannel = null;
+        witchChannel = null;
+        oracleChannel = null;
+        cupidChannel = null;
     }
 
     public static Server getServer() {
@@ -36,7 +47,7 @@ public class GameManager {
     }
 
     public static void setServer(Server server) {
-        GameManager.server = server;
+        DiscordController.server = server;
     }
 
     public static boolean addUser(User user){
@@ -92,20 +103,42 @@ public class GameManager {
     }
 
     public static void resetInstance(){
-        instance = new GameManager();
+        instance = new DiscordController();
     }
 
     public static HashMap<User, Roles> getUsers(){
         return inGame;
     }
 
-    public static List<User> getWolves(){
-        ArrayList<User> wolves = new ArrayList<>();
-        for (User eachUser : players){
-            if (inGame.get(eachUser) == Roles.WOLF){
-                wolves.add(eachUser);
-            }
-        }
-        return wolves;
+    public static TextChannel getWolvesChannel() {
+        return wolvesChannel;
+    }
+
+    public static void setWolvesChannel(TextChannel wolvesChannel) {
+        DiscordController.wolvesChannel = wolvesChannel;
+    }
+
+    public static TextChannel getWitchChannel() {
+        return witchChannel;
+    }
+
+    public static void setWitchChannel(TextChannel witchChannel) {
+        DiscordController.witchChannel = witchChannel;
+    }
+
+    public static TextChannel getOracleChannel() {
+        return oracleChannel;
+    }
+
+    public static void setOracleChannel(TextChannel oracleChannel) {
+        DiscordController.oracleChannel = oracleChannel;
+    }
+
+    public static TextChannel getCupidChannel() {
+        return cupidChannel;
+    }
+
+    public static void setCupidChannel(TextChannel cupidChannel) {
+        DiscordController.cupidChannel = cupidChannel;
     }
 }

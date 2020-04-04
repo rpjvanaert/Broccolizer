@@ -1,30 +1,23 @@
 package broccolizer.GameLogic;
 
 public enum Roles {
-    UNASSIGNED("Unassigned", false),
-    WOLF("Werewolf", false),
-    VILLAGER("Villager", false),
-    WITCH("Witch", true),
-    ORACLE("Oracle", true),
-    CUPID("Cupid", true),
-
+    UNASSIGNED("Unassigned"),
+    WOLF("Werewolf"),
+    VILLAGER("Villager"),
+    WITCH("Witch"),
+    ORACLE("Oracle"),
+    CUPID("Cupid"),
     ;
 
 
     private String fancyName;
-    private boolean maxOne;
 
-    Roles(String fancyName, boolean maxOne){
+    Roles(String fancyName){
         this.fancyName = fancyName;
-        this.maxOne = maxOne;
     }
 
     public String getFancyName() {
         return fancyName;
-    }
-
-    public boolean getMaxOne() {
-        return maxOne;
     }
 
     public static Roles getRole(String fancyName){

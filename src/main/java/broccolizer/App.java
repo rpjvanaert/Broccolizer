@@ -1,14 +1,11 @@
 package broccolizer;
 
-import broccolizer.GameLogic.GameManager;
-import broccolizer.Listeners.textChannelListener;
+import broccolizer.ChannelManagement.ChannelManager;
+import broccolizer.GameLogic.DiscordController;
+import broccolizer.ChannelManagement.Listeners.MainChannelListener;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
-import org.javacord.api.entity.channel.ServerTextChannelBuilder;
-import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.server.Server;
-
-import javax.sound.sampled.Line;
 
 public class App {
 
@@ -22,11 +19,13 @@ public class App {
 
         Server server = api.getServerById(Information.getServerID()).get();
 
-        GameManager.getInstance().setServer(server);
 
-//        TextChannel channel = new ServerTextChannelBuilder(server).setName("wolves").create().get();
 
-        api.addListener(new textChannelListener());
+        DiscordController.getInstance().setServer(server);
+
+        api.addListener(new MainChannelListener());
+
+        ChannelManager.setupChannels();
 
 
         System.out.println("You can invite the bot by using the following url: " + api.createBotInvite());

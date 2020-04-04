@@ -4,12 +4,11 @@ import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.user.User;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
-public class GameLobbyLogic {
+public class UserLobbyLogic {
         public static boolean addPlayer(User player, TextChannel castChannel){
-            if (GameManager.getInstance().addUser(player)){
+            if (DiscordController.getInstance().addUser(player)){
                 return true;
             } else {
                 return false;
@@ -19,7 +18,7 @@ public class GameLobbyLogic {
         public static boolean addPlayers(List<User> usersList, TextChannel castChannel){
             boolean works = true;
             for(User each : usersList){
-                if (!GameManager.getInstance().addUser(each)){
+                if (!DiscordController.getInstance().addUser(each)){
                     works = false;
                 }
             }
@@ -34,8 +33,8 @@ public class GameLobbyLogic {
     }
 
     public static boolean assignRoles(){
-            if (GameManager.getInstance().getUsers().size() >= 9){
-                GameManager.getInstance().assignRoles();
+            if (DiscordController.getInstance().getUsers().size() >= 9){
+                DiscordController.getInstance().assignRoles();
                 return true;
             }
             return false;
