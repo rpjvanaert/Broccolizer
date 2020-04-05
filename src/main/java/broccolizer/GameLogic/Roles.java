@@ -7,6 +7,7 @@ public enum Roles {
     WITCH("Witch"),
     ORACLE("Oracle"),
     CUPID("Cupid"),
+    LITTLE_GIRL("Little Girl");
     ;
 
 

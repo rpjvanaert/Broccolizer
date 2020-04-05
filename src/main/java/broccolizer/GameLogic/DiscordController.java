@@ -34,7 +34,7 @@ public class DiscordController {
     private DiscordController(){
         inGame = new HashMap<>();
         players = new ArrayList<>();
-        gameState = GameStates.NIGHT;
+        gameState = GameStates.CUPID;
 
         wolvesChannel = null;
         witchChannel = null;
@@ -72,11 +72,12 @@ public class DiscordController {
         assignRole(Roles.WITCH);
         assignRole(Roles.CUPID);
         assignRole(Roles.ORACLE);
+        assignRole(Roles.LITTLE_GIRL);
         int amountWolves;
         if (players.size() >= 12){
-            amountWolves = 4;
-        } else {
             amountWolves = 3;
+        } else {
+            amountWolves = 2;
         }
         for (int i = 0; i < amountWolves; ++i){
             assignRole(Roles.WOLF);

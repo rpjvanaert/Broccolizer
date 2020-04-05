@@ -23,6 +23,8 @@ public class App {
 
         api.addListener(new MainChannelListener());
 
+        ChannelManager.setupChannels();
+
         System.out.println("You can invite the bot by using the following url: " + api.createBotInvite());
     }
 }

@@ -30,8 +30,11 @@ public class ChannelManager {
     }
 
     private static TextChannel setupChannel(Roles rolePermitted){
-        ServerTextChannelBuilder serverTextChannelBuilder = new ServerTextChannelBuilder(DiscordController.getInstance().getServer()).addPermissionOverwrite(DiscordController.getInstance().getServer().getRoleById(Information.getEveryoneRoleID()).get(), getPermissionDenied());
-        serverTextChannelBuilder = setPermissionRoleOnly(serverTextChannelBuilder, rolePermitted);
+        ServerTextChannelBuilder serverTextChannelBuilder = new ServerTextChannelBuilder(DiscordController.getInstance().getServer())
+                .addPermissionOverwrite(DiscordController.getInstance().getServer()
+                        .getRoleById(Information.getEveryoneRoleID()).get(), getPermissionAllowedRead());
+
+        serverTextChannelBuilder = setRoleDependingPermission(serverTextChannelBuilder, rolePermitted);
         TextChannel returnChannel = null;
         try {
             returnChannel = serverTextChannelBuilder.setName(rolePermitted.getFancyName()).create().get();
@@ -51,12 +54,12 @@ public class ChannelManager {
      * @param roles
      * @return serverTextChannelBuilder
      */
-    private static ServerTextChannelBuilder setPermissionRoleOnly(ServerTextChannelBuilder serverTextChannelBuilder, Roles roles){
+    private static ServerTextChannelBuilder setRoleDependingPermission(ServerTextChannelBuilder serverTextChannelBuilder, Roles roles){
         for (User eachUser : DiscordController.getInstance().getUsers().keySet()){
             if (DiscordController.getInstance().getUsers().get(eachUser) == roles){
                 serverTextChannelBuilder.addPermissionOverwrite(eachUser, getPermissionAllowedChat());
-            } else {
-                serverTextChannelBuilder.addPermissionOverwrite(eachUser, getPermissionDenied());
+            } else if (DiscordController.getInstance().getUsers().get(eachUser) == Roles.LITTLE_GIRL){
+                serverTextChannelBuilder.addPermissionOverwrite(eachUser, getPermissionAllowedRead());
             }
         }
         return serverTextChannelBuilder;
@@ -70,6 +73,18 @@ public class ChannelManager {
     private static Permissions getPermissionDenied(){
         return new PermissionsBuilder()
                 .setAllDenied()
+                .build();
+    }
+
+    /**
+     * getPermissionAllowedRead
+     * builds Permission with all denied but read allowed.
+     * @return Permissions
+     */
+    private static Permissions getPermissionAllowedRead(){
+        return new PermissionsBuilder()
+                .setAllDenied()
+                .setAllowed(PermissionType.READ_MESSAGES)
                 .build();
     }
 

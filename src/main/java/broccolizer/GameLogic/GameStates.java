@@ -1,8 +1,9 @@
 package broccolizer.GameLogic;
 
 public enum GameStates {
-    NIGHT("Night"),
-    DAY("Day");
+    CUPID("Cupid is linking 2 lovers!"),
+    ORACLE("The Oracle is getting a prophecy...");
+
 
 
     private String fancyName;
