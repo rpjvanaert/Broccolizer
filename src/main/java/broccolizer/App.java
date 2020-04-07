@@ -2,7 +2,7 @@ package broccolizer;
 
 import broccolizer.ChannelManagement.ChannelManager;
 import broccolizer.GameLogic.DiscordController;
-import broccolizer.ChannelManagement.Listeners.MainChannelListener;
+import broccolizer.ChannelManagement.Listeners.LobbyChannelListener;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.server.Server;
@@ -21,9 +21,9 @@ public class App {
 
         DiscordController.getInstance().setServer(server);
 
-        api.addListener(new MainChannelListener());
+        api.addListener(new LobbyChannelListener());
 
-        ChannelManager.setupChannels();
+        DiscordController.getInstance().setLobbyChannel(api.getTextChannelById(Information.getLobbyID()).get());
 
         System.out.println("You can invite the bot by using the following url: " + api.createBotInvite());
     }

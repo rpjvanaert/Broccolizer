@@ -13,12 +13,12 @@ public class DiscordController {
 
     private static HashMap<User, Roles> inGame;
     private static ArrayList<User> players;
-    private static GameStates gameState;
 
     private static TextChannel wolvesChannel;
     private static TextChannel witchChannel;
     private static TextChannel oracleChannel;
     private static TextChannel cupidChannel;
+    private static TextChannel lobbyChannel;
 
     private static Server server;
 
@@ -34,12 +34,12 @@ public class DiscordController {
     private DiscordController(){
         inGame = new HashMap<>();
         players = new ArrayList<>();
-        gameState = GameStates.CUPID;
 
         wolvesChannel = null;
         witchChannel = null;
         oracleChannel = null;
         cupidChannel = null;
+        lobbyChannel = null;
     }
 
     public static Server getServer() {
@@ -57,6 +57,15 @@ public class DiscordController {
             return true;
         }
         return false;
+    }
+
+    public static User getUserWithRole(Roles role){
+        for(User user : inGame.keySet()){
+            if (inGame.get(user) == role){
+                return user;
+            }
+        }
+        return null;
     }
 
     public static boolean removeUser(User user){
@@ -109,6 +118,14 @@ public class DiscordController {
 
     public static HashMap<User, Roles> getUsers(){
         return inGame;
+    }
+
+    public static TextChannel getLobbyChannel() {
+        return lobbyChannel;
+    }
+
+    public static void setLobbyChannel(TextChannel lobbyChannel) {
+        DiscordController.lobbyChannel = lobbyChannel;
     }
 
     public static TextChannel getWolvesChannel() {

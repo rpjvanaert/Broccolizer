@@ -2,7 +2,6 @@ package broccolizer;
 
 public enum BotStates {
     LOBBY("Lobbying"),
-    ROLE_ASSIGNMENT("Assigning roles"),
     IN_GAME("In-Game");
 
     private String fancyName;

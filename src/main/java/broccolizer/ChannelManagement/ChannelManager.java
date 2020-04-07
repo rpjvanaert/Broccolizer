@@ -15,6 +15,10 @@ import java.util.concurrent.ExecutionException;
 
 public class ChannelManager {
 
+    public static void deleteChannel(TextChannel channel){
+        channel.asServerChannel().get().delete();
+    }
+
     public static void setupChannels(){
         DiscordController.getInstance().setWolvesChannel(setupChannel(Roles.WOLF));
         DiscordController.getInstance().getWolvesChannel().addTextChannelAttachableListener(new WolfChannelListener());
@@ -32,7 +36,7 @@ public class ChannelManager {
     private static TextChannel setupChannel(Roles rolePermitted){
         ServerTextChannelBuilder serverTextChannelBuilder = new ServerTextChannelBuilder(DiscordController.getInstance().getServer())
                 .addPermissionOverwrite(DiscordController.getInstance().getServer()
-                        .getRoleById(Information.getEveryoneRoleID()).get(), getPermissionAllowedRead());
+                        .getRoleById(Information.getEveryoneRoleID()).get(), getPermissionDenied());
 
         serverTextChannelBuilder = setRoleDependingPermission(serverTextChannelBuilder, rolePermitted);
         TextChannel returnChannel = null;
