@@ -3,6 +3,8 @@ package broccolizer.ChannelManagement.Listeners;
 import broccolizer.App;
 import broccolizer.BotStates;
 import broccolizer.ChannelManagement.ChannelManager;
+import broccolizer.ChannelManagement.MemeGenerator;
+import broccolizer.GameLogic.GameController;
 import broccolizer.GameLogic.UserLobbyLogic;
 import broccolizer.GameLogic.DiscordController;
 import broccolizer.GameLogic.Roles;
@@ -10,6 +12,7 @@ import broccolizer.Information;
 import broccolizer.TUI;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.Message;
+import org.javacord.api.entity.message.MessageBuilder;
 import org.javacord.api.entity.message.MessageSet;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
@@ -53,12 +56,15 @@ public class LobbyChannelListener implements MessageCreateListener {
                         App.state = BotStates.IN_GAME;
                         ChannelManager.setupChannels();
                         TUI.sendRoleChannelInstruction();
+                        GameController.getInstance();
                     }
                 }
 
             } else if (msg.getContent().equalsIgnoreCase("!info")){
                 if (App.state == BotStates.LOBBY){
                     TUI.sendLobbyInstruction(sentChannel);
+                } else if (App.state == BotStates.IN_GAME){
+                    TUI.sendGameInstruction(sentChannel);
                 }
 
             } else if (msg.getContent().equalsIgnoreCase("!leave") && App.state == BotStates.LOBBY){
@@ -76,9 +82,19 @@ public class LobbyChannelListener implements MessageCreateListener {
                     sentChannel.sendMessage("The players in current session:");
                     UserLobbyLogic.sendUsers(players, sentChannel);
                 }
+
             } else if (msg.getContent().equalsIgnoreCase("!state")){
                 sentChannel.sendMessage(App.state.getFancyName());
+
             } else if (msg.getContent().equalsIgnoreCase("!gameState")){
+                if (App.state == BotStates.LOBBY){
+                    sentChannel.sendMessage("Not yet in game!");
+                } else {
+                    sentChannel.sendMessage(GameController.getInstance().getGameState().getFancyName());
+                }
+
+            } else if (msg.getContent().equalsIgnoreCase("!meme")){
+                new MessageBuilder().append(MemeGenerator.getInstance().getRandomTitle()).addFile(MemeGenerator.getInstance().getRandomMeme()).send(sentChannel);
 
             }
         }

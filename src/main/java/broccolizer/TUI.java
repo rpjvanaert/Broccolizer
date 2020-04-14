@@ -73,4 +73,7 @@ public class TUI {
                         "Good luck and have fun! :smile:"
         );
     }
+
+    public static void sendGameInstruction(TextChannel sentChannel) {
+    }
 }
