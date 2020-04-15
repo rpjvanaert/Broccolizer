@@ -1,4 +1,4 @@
-package broccolizer.ChannelManagement;
+package broccolizer.Generators;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class MemeGenerator {
                 "coffee", "milk", "chemicals", "ankles", "blood", "cool", "shit",
                 "swear words", "bullfrogs", "ankle biters", "death", "life", "suffering",
                 "the meaning", "guns", "lines", "sausages", "vegetables", "bed", "chair", "table",
-                "in your mind", "Justice magicians", "Harry Potter", "mean"
+                "in your mind", "Justice magicians", "Harry Potter", "girls", "guys", "your mom"
         ));
     }
 

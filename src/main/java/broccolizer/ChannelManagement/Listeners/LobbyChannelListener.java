@@ -3,7 +3,8 @@ package broccolizer.ChannelManagement.Listeners;
 import broccolizer.App;
 import broccolizer.BotStates;
 import broccolizer.ChannelManagement.ChannelManager;
-import broccolizer.ChannelManagement.MemeGenerator;
+import broccolizer.Generators.DogGenerator;
+import broccolizer.Generators.MemeGenerator;
 import broccolizer.GameLogic.GameController;
 import broccolizer.GameLogic.UserLobbyLogic;
 import broccolizer.GameLogic.DiscordController;
@@ -18,6 +19,7 @@ import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 
+import java.net.URL;
 import java.util.HashMap;
 
 public class LobbyChannelListener implements MessageCreateListener {
@@ -96,6 +98,8 @@ public class LobbyChannelListener implements MessageCreateListener {
             } else if (msg.getContent().equalsIgnoreCase("!meme")){
                 new MessageBuilder().append(MemeGenerator.getInstance().getRandomTitle()).addFile(MemeGenerator.getInstance().getRandomMeme()).send(sentChannel);
 
+            } else if (msg.getContent().equalsIgnoreCase("!dog")){
+                new MessageBuilder().append("Doggo").append(DogGenerator.getDogIMG()).send(sentChannel);
             }
         }
     }
