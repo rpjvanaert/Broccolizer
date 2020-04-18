@@ -29,6 +29,7 @@ public class OracleChannelListener implements MessageCreateListener {
                         //Checks if author is dead
                         if (GameController.getInstance().isDead(msg.getUserAuthor().get())){
                             sentChannel.sendMessage("Player " + msg.getMentionedUsers().get(0) + " has the role: " + DiscordController.getInstance().getUsers().get(msg.getUserAuthor().get()));
+                            GameController.getInstance().giveNextInstruction();
                         }
                     } else {
                         sentChannel.sendMessage("You can't expose someone who isn't in the game.");
@@ -40,8 +41,6 @@ public class OracleChannelListener implements MessageCreateListener {
             } else {
                 sentChannel.sendMessage("You can't expose more or less than 1 player!");
             }
-        } else {
-            sentChannel.sendMessage("Use '!expose' when it's your turn!");
         }
     }
 }

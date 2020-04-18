@@ -3,14 +3,11 @@ package broccolizer.ChannelManagement.Listeners;
 import broccolizer.App;
 import broccolizer.BotStates;
 import broccolizer.ChannelManagement.ChannelManager;
-import broccolizer.Generators.DogGenerator;
+import broccolizer.GameLogic.*;
+import broccolizer.Generators.GeneratorAnimalAPI;
 import broccolizer.Generators.MemeGenerator;
-import broccolizer.GameLogic.GameController;
-import broccolizer.GameLogic.UserLobbyLogic;
-import broccolizer.GameLogic.DiscordController;
-import broccolizer.GameLogic.Roles;
 import broccolizer.Information;
-import broccolizer.TUI;
+import broccolizer.ChannelManagement.TUI;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.MessageBuilder;
@@ -19,7 +16,6 @@ import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 
-import java.net.URL;
 import java.util.HashMap;
 
 public class LobbyChannelListener implements MessageCreateListener {
@@ -99,9 +95,52 @@ public class LobbyChannelListener implements MessageCreateListener {
                 new MessageBuilder().append(MemeGenerator.getInstance().getRandomTitle()).addFile(MemeGenerator.getInstance().getRandomMeme()).send(sentChannel);
 
             } else if (msg.getContent().equalsIgnoreCase("!dog")){
-                new MessageBuilder().append("Doggo").append(DogGenerator.getDogIMG()).send(sentChannel);
+                new MessageBuilder().append(GeneratorAnimalAPI.getDogTitle()).addFile(GeneratorAnimalAPI.getDogURL()).send(sentChannel);
+
+            } else if (msg.getContent().equalsIgnoreCase("!cat")){
+                new MessageBuilder().append(GeneratorAnimalAPI.getCatTitle()).addFile(GeneratorAnimalAPI.getCatURL()).send(sentChannel);
+
+            } else if (msg.getContent().contains("!dogs ") && msg.getContent().length() == 7){
+                int times = Integer.parseInt(msg.getContent().substring(6));
+                if (times > 0){
+                    if (times > 5){
+                        times = 5;
+                    }
+                    for (int i = 0; i < times; ++i){
+                        new MessageBuilder().append(GeneratorAnimalAPI.getDogTitle()).addFile(GeneratorAnimalAPI.getDogURL()).send(sentChannel);
+                    }
+                }
+
+            } else if (msg.getContent().contains("!cats ") && msg.getContent().length() == 7){
+                int times = Integer.parseInt(msg.getContent().substring(6));
+                if (times > 0){
+                    if (times > 5){
+                        times = 5;
+                    }
+                    for (int i = 0; i < times; ++i){
+                        new MessageBuilder().append(GeneratorAnimalAPI.getCatTitle()).addFile(GeneratorAnimalAPI.getCatURL()).send(sentChannel);
+                    }
+                }
+                // Check gameState VOTING and content on !vote
+            } else if (GameController.getInstance().getGameState() == GameStates.VOTING){
+                if (msg.getContent().contains("!vote") & msg.getMentionedUsers().size() == 1){
+                    if (GameController.getInstance().vote(msg.getUserAuthor().get(), msg.getMentionedUsers().get(0))){
+
+                    } else {
+                        sentChannel.sendMessage("Vote error: user not found.");
+                    }
+                } else if (msg.getContent().equalsIgnoreCase("!votes")){
+                    GameController.getInstance().sendVotes(sentChannel);
+                } else if (msg.getContent().equalsIgnoreCase("!endVoting") && GameController.getInstance().votingReady()){
+                User lynch = GameController.getInstance().endVoting();
+                sentChannel.sendMessage(lynch + " has been lynched!");
+                GameController.getInstance().killPlayer(lynch);
+                GameController.getInstance().checkWin();
+                GameController.getInstance().giveNextInstruction();
+                } else {
+                    sentChannel.sendMessage("Voting error");
+                }
             }
         }
     }
-
 }

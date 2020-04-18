@@ -33,7 +33,7 @@ public class UserLobbyLogic {
     }
 
     public static boolean assignRoles(){
-            if (DiscordController.getInstance().getUsers().size() >= 9){
+            if (DiscordController.getInstance().getUsers().size() >= 6){
                 DiscordController.getInstance().assignRoles();
                 return true;
             }

@@ -89,6 +89,7 @@ public class ChannelManager {
         return new PermissionsBuilder()
                 .setAllDenied()
                 .setAllowed(PermissionType.READ_MESSAGES)
+                .setAllowed(PermissionType.READ_MESSAGE_HISTORY)
                 .build();
     }
 
@@ -102,6 +103,7 @@ public class ChannelManager {
                 .setAllDenied()
                 .setAllowed(PermissionType.READ_MESSAGES)
                 .setAllowed(PermissionType.SEND_MESSAGES)
+                .setAllowed(PermissionType.READ_MESSAGE_HISTORY)
                 .build();
     }
 }

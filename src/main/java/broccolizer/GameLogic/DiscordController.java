@@ -42,6 +42,8 @@ public class DiscordController {
         lobbyChannel = null;
     }
 
+    public static void reset(){ instance = null;}
+
     public static Server getServer() {
         return server;
     }
@@ -81,7 +83,6 @@ public class DiscordController {
         assignRole(Roles.WITCH);
         assignRole(Roles.CUPID);
         assignRole(Roles.ORACLE);
-        assignRole(Roles.LITTLE_GIRL);
         int amountWolves;
         if (players.size() >= 12){
             amountWolves = 3;

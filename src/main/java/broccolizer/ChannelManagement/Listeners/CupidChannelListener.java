@@ -32,8 +32,6 @@ public class CupidChannelListener implements MessageCreateListener {
             } else {
                 sentChannel.sendMessage("You can't bond yourself or more than 2 people.");
             }
-        } else {
-            sentChannel.sendMessage("Please include '!bond' in your message and mention 2 players to bond.");
         }
     }
 }

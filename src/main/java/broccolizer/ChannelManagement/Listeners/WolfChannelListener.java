@@ -25,17 +25,20 @@ public class WolfChannelListener implements MessageCreateListener {
 
 
                 //Checks if mentioned user isn't dead
-                if (!GameController.getInstance().isDead(msg.getMentionedUsers().get(0))){
+                if (!GameController.getInstance().isDead(msg.getMentionedUsers().get(0)) && !GameController.getInstance().isDead(msg.getUserAuthor().get())){
 
                     //Checks if mentioned user isnt a wolf
                     if (DiscordController.getInstance().getUsers().get(msg.getMentionedUsers().get(0)) != Roles.WOLF){
-
+                        GameController.getInstance().playerDying(msg.getMentionedUsers().get(0));
+                        GameController.getInstance().giveNextInstruction();
                     } else {
                         sentChannel.sendMessage("A wolf can't kill a wolf!");
                     }
                 } else {
-                    sentChannel.sendMessage("Can't kill a dead person!", new File("memesIncluded/alreadyDead.jpg"));
+                    sentChannel.sendMessage("Can't kill a dead person! or a dead wolf cant kill.", new File("memesIncluded/alreadyDead.jpg"));
                 }
+            } else {
+                sentChannel.sendMessage("The one user you want to kill must be in the game");
             }
         }
     }
